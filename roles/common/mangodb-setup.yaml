@@ -1,0 +1,17 @@
+- name: copy mongodb.repo
+  ansible.builtin.copy:
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: install mongodb-org-shell
+  ansible.builtin.package:
+    name: mongodb-org-shell
+    state: present
+
+- name: count categories
+  ansible.builtin.command:  mongo --host 172.31.91.31 --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+  register: product_count
+
+- name: load catalogue data
+  ansible.builtin.command: mongo --host 172.31.91.31 < /app/schema/catalogue.js
+  when: product_count.stdout == "0"
