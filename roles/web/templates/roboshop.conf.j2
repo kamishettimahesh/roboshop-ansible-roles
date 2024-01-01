@@ -8,7 +8,7 @@ location /api/catalogue/ { proxy_pass http://catalogue.kamishetti.online:8080/; 
 location /api/user/ { proxy_pass http://user.kamishetti.online:8080/; }
 location /api/cart/ { proxy_pass http://cart.kamishetti.online:8080/; }
 location /api/shipping/ { proxy_pass http://shipping.kamishetti.online:8080/; }
-location /api/payment/ { proxy_pass http://paymen.kamishetti.online:8080/; }
+location /api/payment/ { proxy_pass http://payment.kamishetti.online:8080/; }
 
 location /health {
   stub_status on;
