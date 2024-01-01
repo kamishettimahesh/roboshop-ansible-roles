@@ -18,11 +18,11 @@
   register: entries_count
   when: component == "user"
 
-- name: "load {{component}} data"
+- name: "load catalogue data"
   ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
   when: product_count.stdout == "0" and component == "catalogue"
 
 
-- name: "load {{component}} data"
+- name: "load user data"
   ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
   when: user_count.stdout == "0" and component == "user"
