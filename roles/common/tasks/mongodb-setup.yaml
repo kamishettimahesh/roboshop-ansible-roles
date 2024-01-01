@@ -21,8 +21,10 @@
 - name: "load catalogue data"
   ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
   when: product_count.stdout == "0" and component == "catalogue"
+  ignore_errors: true
 
 
 - name: "load user data"
   ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
   when: user_count.stdout == "0" and component == "user"
+  ignore_errors: true
