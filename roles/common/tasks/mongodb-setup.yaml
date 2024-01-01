@@ -9,15 +9,15 @@
     state: present
 
 - name: count categories
-  ansible.builtin.command:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+  ansible.builtin.shell:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
   register: product_count
   when: component == "catalogue"
 
 - name: count categories
-  ansible.builtin.command:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("cart"); db.products.count()'
+  ansible.builtin.shell:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("cart"); db.products.count()'
   register: product_count
   when: component == "cart"
 
 - name: "load {{component}} data"
-  ansible.builtin.command: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
+  ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
   when: product_count.stdout == "0"
