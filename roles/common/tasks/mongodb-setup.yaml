@@ -14,10 +14,15 @@
   when: component == "catalogue"
 
 - name: count categories
-  ansible.builtin.shell:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("cart"); db.products.count()'
-  register: product_count
-  when: component == "cart"
+  ansible.builtin.shell:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("user"); db.products.count()'
+  register: entries_count
+  when: component == "user"
 
 - name: "load {{component}} data"
   ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
   when: product_count.stdout == "0"
+
+
+- name: "load {{component}} data"
+  ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
+  when: user_count.stdout == "0"
