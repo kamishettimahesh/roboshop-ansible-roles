@@ -8,21 +8,21 @@
     name: mongodb-org-shell
     state: present
 
-- name: count categories
+- name: count product categories
   ansible.builtin.shell:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
   register: product_count
   when: component == "catalogue"
 
-- name: count categories
+- name: count user entries
   ansible.builtin.shell:  mongo --host mongodb.kamishetti.online --quiet --eval 'db = db.getSiblingDB("user"); db.products.count()'
   register: entries_count
   when: component == "user"
 
 - name: "load {{component}} data"
   ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
-  when: product_count.stdout == "0"
+  when: product_count.stdout == "0" and component == "catalogue"
 
 
 - name: "load {{component}} data"
   ansible.builtin.shell: "mongo --host mongodb.kamishetti.online < /app/schema/{{component}}.js"
-  when: user_count.stdout == "0"
+  when: user_count.stdout == "0" and component == "user"
