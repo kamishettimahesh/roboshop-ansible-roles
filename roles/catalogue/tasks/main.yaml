@@ -15,5 +15,5 @@
 
 - name: systemd
   ansible.builtin.import_role:
-    name: catalogue
+    name: common
     tasks_from: systemd
